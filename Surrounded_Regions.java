@@ -45,3 +45,24 @@ public class Solution {
 				if( visit[i][j] ) board[i][j] = 'X';
 	}
 }
+
+
+
+public int minSwap(int[] array) {
+	if (array == null || array.length < 2)
+		return 0;
+
+	int minSwap = 0;
+	int target = 1, index = 0;
+	while (index < array.length) {
+		if (array[index] == target) {
+			index++;
+			target++;
+		} else {
+			minSwap++;
+			index++;
+		}
+	}
+
+	return minSwap;
+}

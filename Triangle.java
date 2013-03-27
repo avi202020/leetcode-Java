@@ -1,4 +1,6 @@
-class Solution {
+import java.util.ArrayList;
+
+public class Triangle {
     public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
         // Start typing your Java solution below
         // DO NOT write main() function
@@ -30,4 +32,7 @@ class Solution {
         		max = triangle.get(index).get(i);
         return max;
     }
+	public static void main( String[] argv )
+	{
+	}
 }
