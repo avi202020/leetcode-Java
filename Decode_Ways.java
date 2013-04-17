@@ -6,10 +6,7 @@ public class Solution {
 		if( s.charAt(0) == '0' ) return 0;
 		int[] dp = new int[s.length()+1];
 		dp[0] = 1;
-		if( s.charAt(0) == '0' )
-			dp[1] = 0;
-		else 
-			dp[1] = 1;
+		dp[1] = s.charAt(0) == '0' ? 0 : 1; 
 		for( int i = 2; i <= s.length(); ++i )
 		{
 			int tmp = 0;
