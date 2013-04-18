@@ -19,9 +19,12 @@ public class Solution {
 		int ny = y + dir[curdir][1];
 		if( nx >= 0 && nx < matrix.length && ny >= 0 && ny < matrix[0].length && visit[nx][ny] == false )
 			dfs( matrix, visit, nx, ny, curdir, ans );
-		curdir = ( curdir + 1 ) % 4;
-		nx = x + dir[curdir][0];
-		ny = y + dir[curdir][1];
-		dfs( matrix, visit, nx, ny, curdir, ans );
+		else
+		{
+			curdir = ( curdir + 1 ) % 4;
+			nx = x + dir[curdir][0];
+			ny = y + dir[curdir][1];
+			dfs( matrix, visit, nx, ny, curdir, ans );
+		}
 	}
 }
