@@ -2,13 +2,14 @@ public class Solution {
 	public String convert(String s, int nRows) {
 		// Start typing your Java solution below
 		// DO NOT write main() function
+
 		if( nRows == 1 ) return s;
 		ArrayList<StringBuffer> row = new ArrayList<StringBuffer>();
 		for( int i = 0; i < nRows; ++i )
 		{
 			StringBuffer sb = new StringBuffer();
 			row.add(sb);
-		}
+		} 
 		int cur = 0;
 		boolean dir = true;
 		for( int i = 0; i < s.length(); ++i )
