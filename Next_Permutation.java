@@ -28,7 +28,8 @@ public class Solution {
 		num[i-1] = tmp;
 		i++;
 		j = len;
-		while (i < j) {
+		while (i < j) 
+		{
 			tmp = num[i - 1];
 			num[i - 1] = num[j - 1];
 			num[j - 1] = tmp;
