@@ -1,68 +1,55 @@
+//******************************************************
+//          get a TLE in the big test
+//******************************************************
+
 public class Solution {
-	public final int[][] dir = { {1,0},{0,1} ,{-1,0},{0,-1}};
 	public void solve(char[][] board) {
-    	// Start typing your Java solution below
-    	// DO NOT write main() function
-    	int row = board.length;
-    	if( row == 0 ) return;
-    	int col = board[0].length;
-    	for( int i = 0; i < row; ++i )
-    	{
-    		for( int j = 0; j < col; ++j )
-    		{
-    			if( board[i][j] == 'O' )
-    			{
-    				boolean[][] visit = new boolean[row][col];
-    				boolean ok = dfs( board, visit, i, j );
-    				if( ok ) color( board, visit );
-    			}
-    		}
-    	}
-    }
-	public boolean dfs( char[][] board, boolean[][] visit, int x,int y )
-	{
-		if( x < 0 || x >= board.length ) return false;
-		if( y < 0 || y >= board[0].length ) return false;
-		if( board[x][y] == 'X' ) return true;
-		if( visit[x][y] == true ) return true;
-		if( board[x][y] == 'O' )
+		// Start typing your Java solution below
+		// DO NOT write main() function
+		if( board.length == 0 ) return;
+		int m = board.length;
+		int n = board[0].length;
+		boolean[][] visit = new boolean[m][n];
+		int[][] dir = new int[][]{ {0,1}, {1,0}, {0,-1}, {-1,0} };
+		for( int i = 0; i < m; ++i )
+			for( int j = 0; j < n; ++j )
+				visit[i][j] = false;
+		for( int i = 0; i < m; ++i )
 		{
-			visit[x][y] = true;
-			for( int i = 0; i < 4; ++i )
+			for( int j = 0; j < n; ++j )
 			{
-				int cx = x + dir[i][0];
-				int cy = y + dir[i][1];
-				boolean tmp = dfs( board, visit, cx, cy );
-				if( tmp == false ) return false;
+				if( i == 0 || j == 0 || i == m - 1 || j == n - 1 )
+				{
+					if( board[i][j] == 'O' )
+						dfs( board, visit, dir, i, j );
+				}
 			}
 		}
-		return true;
-	}
-	public void color( char[][] board, boolean[][] visit )
-	{
-		for( int i = 0; i < board.length; ++i )
-			for( int j = 0; j < board[0].length; ++j )
-				if( visit[i][j] ) board[i][j] = 'X';
-	}
-}
-
-
-
-public int minSwap(int[] array) {
-	if (array == null || array.length < 2)
-		return 0;
-
-	int minSwap = 0;
-	int target = 1, index = 0;
-	while (index < array.length) {
-		if (array[index] == target) {
-			index++;
-			target++;
-		} else {
-			minSwap++;
-			index++;
+		for( int i = 0; i < m; ++i )
+		{
+			for( int j = 0; j < n; ++j )
+			{
+				if( visit[i][j] == false )
+					board[i][j] = 'X';
+			}
 		}
 	}
-
-	return minSwap;
+	public void dfs( char[][] board, boolean[][] visit, int[][] dir, int x, int y )
+	{
+		visit[x][y] = true;
+		for( int i = 0; i < 4; ++i )
+		{
+			int nx = x + dir[i][0];
+			int ny = y + dir[i][1];
+			if( nx < 0 || nx >= board.length )
+				continue;
+			if( ny < 0 || ny >= board.length )
+				continue;
+			if( visit[nx][ny] == true )
+				continue;
+			if( board[nx][ny] == 'X' )
+				continue;
+			dfs( board, visit, dir, nx, ny );
+		}
+	}
 }
