@@ -43,7 +43,7 @@ public class Solution {
 			int ny = y + dir[i][1];
 			if( nx < 0 || nx >= board.length )
 				continue;
-			if( ny < 0 || ny >= board.length )
+			if( ny < 0 || ny >= board[0].length )
 				continue;
 			if( visit[nx][ny] == true )
 				continue;
