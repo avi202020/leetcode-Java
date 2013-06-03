@@ -81,3 +81,50 @@ public class Solution {
 		public String sorted;
 	}
 }
+
+
+//***********************************************************
+//               2. easier solution using map
+//***********************************************************
+
+public class Solution {
+    public ArrayList<String> anagrams(String[] strs) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+		for( int i = 0; i < strs.length; ++i )
+		{
+			int[] cnt = new int[26];
+			for( int j = 0; j < strs[i].length(); ++j )
+				cnt[ strs[i].charAt(j) - 'a' ]++;
+			StringBuilder sb = new StringBuilder();
+			for( int j = 0; j < 26; ++j )
+			{
+				if( cnt[j] != 0 )
+				{
+					for( int k = 0; k < cnt[j]; ++k )
+						sb.append( (char)('a' + j ) );
+				}
+			}
+			if( map.containsKey(sb.toString()) )
+				map.get(sb.toString()).add(strs[i]);
+			else
+			{
+				ArrayList<String> arr = new ArrayList<String>();
+				arr.add(strs[i]);
+				map.put( sb.toString(), arr );
+			}
+		}
+		ArrayList<String> ans = new ArrayList<String>();
+		for( Map.Entry<String,ArrayList<String>> pair : map.entrySet() )
+		{
+			ArrayList<String> val = (ArrayList<String>) pair.getValue();
+			if( val.size() > 1 )
+			{
+				for( String str : val )
+    				ans.add(str);
+			}
+		}
+		return ans;
+	}
+}
