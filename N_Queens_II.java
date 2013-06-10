@@ -5,12 +5,13 @@ public class Solution {
 		// DO NOT write main() function
 		int[] queen = new int[n];
 		this.count = 0;
-		dfs( queen, n, 0 );
+		dfs( queen, 0 );
 		return this.count;
 	}
 
-	public void dfs( int[] queen, int maxd, int depth )
+	public void dfs( int[] queen, int depth )
 	{
+		int maxd = queen.length;
 		if( depth >= maxd )
 			this.count++;
 		for( int i = 0; i < maxd; ++i )
@@ -18,7 +19,7 @@ public class Solution {
 			if( check( queen, depth, i ) )
 			{
 				queen[depth] = i;
-				dfs( queen, maxd, depth + 1 );
+				dfs( queen, depth + 1 );
 			}
 		}
 	}
