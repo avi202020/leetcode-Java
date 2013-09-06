@@ -27,6 +27,8 @@ public class Solution {
 					sb = new StringBuilder(cur.data);
 					sb.setCharAt(i, ch);
 					String candidate = sb.toString();
+					if (candidate.equal(end))
+						return cur.step + 1;
 					if (dict.contains(candidate) ) {
 						if (visited.contains(sb.toString()))
 							continue;
