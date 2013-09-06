@@ -20,19 +20,18 @@ public class Solution {
 			}
 			return;
 		}
-		int j = len;
-		while( num[j-1] <= num[i-1] )
+		int j = len - 1;
+		while( num[j] <= num[i-1] )
 			j--;
-		int tmp = num[j-1];
-		num[j-1] = num[i-1];
+		int tmp = num[j];
+		num[j] = num[i-1];
 		num[i-1] = tmp;
-		i++;
-		j = len;
+		j = len - 1;
 		while (i < j) 
 		{
-			tmp = num[i - 1];
-			num[i - 1] = num[j - 1];
-			num[j - 1] = tmp;
+			tmp = num[i];
+			num[i] = num[j];
+			num[j] = tmp;
 			i++;
 			j--;
 		}
