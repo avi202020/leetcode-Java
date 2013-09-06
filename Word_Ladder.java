@@ -27,15 +27,16 @@ public class Solution {
 					sb = new StringBuilder(cur.data);
 					sb.setCharAt(i, ch);
 					String candidate = sb.toString();
-					if (candidate.equal(end))
+					if (candidate.equals(end))
 						return cur.step + 1;
-					if (dict.contains(candidate) ) {
-						if (visited.contains(sb.toString()))
-							continue;
-						QueueNode node = new QueueNode(candidate, cur.step + 1);
-						queue.add(node);
-						visited.add(candidate);
-					}
+					if (!dict.contains(candidate) )
+						continue;
+					if (visited.contains(sb.toString()))
+						continue;
+					QueueNode node = new QueueNode(candidate, cur.step + 1);
+					queue.add(node);
+					visited.add(candidate);
+
 				}
 			}
 		}
