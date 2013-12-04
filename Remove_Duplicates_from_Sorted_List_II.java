@@ -50,3 +50,39 @@ public class Solution {
 		return newhead;
 	}
 }
+
+
+
+// Solution 2. two pointers
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if( head == null || head.next == null )
+            return head;
+        ListNode dummyHead = new ListNode(-1);
+        dummyHead.next = head;
+        ListNode pre = dummyHead;
+        ListNode cur = head;
+        while( pre.next != null ) {
+            cur = pre.next;
+            while( cur.next != null && cur.next.val == cur.val )
+                cur = cur.next;
+            if( pre.next != cur )
+                pre.next = cur.next;
+            else
+                pre = cur;
+        }
+        
+        return dummyHead.next;
+    }
+}
