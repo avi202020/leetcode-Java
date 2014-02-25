@@ -20,7 +20,7 @@ public class Solution {
 
 // 2. recursive method 
 public class Solution {
-    public boolean isPalindrome2(int x) {
+    public boolean isPalindrome(int x) {
         if (x < 0)
             return false;
         int div = 1;
