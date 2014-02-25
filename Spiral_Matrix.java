@@ -1,4 +1,6 @@
 public class Solution {
+    
+    // four directions
     int[][] dir = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
 
     public ArrayList<Integer> spiralOrder(int[][] matrix) {
@@ -12,16 +14,14 @@ public class Solution {
         return ans;
     }
 
-    public void dfs(int[][] matrix, boolean[][] visit, int x, int y,
-            int curdir, ArrayList<Integer> ans) {
+    public void dfs(int[][] matrix, boolean[][] visit, int x, int y, int curdir, ArrayList<Integer> ans) {
         if (ans.size() >= matrix.length * matrix[0].length)
             return;
         ans.add(matrix[x][y]);
         visit[x][y] = true;
         int nx = x + dir[curdir][0];
         int ny = y + dir[curdir][1];
-        if (nx >= 0 && nx < matrix.length && ny >= 0 && ny < matrix[0].length
-                && visit[nx][ny] == false)
+        if (nx >= 0 && nx < matrix.length && ny >= 0 && ny < matrix[0].length && visit[nx][ny] == false)
             dfs(matrix, visit, nx, ny, curdir, ans);
         curdir = (curdir + 1) % 4;
         nx = x + dir[curdir][0];
