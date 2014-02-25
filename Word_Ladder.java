@@ -1,16 +1,18 @@
 public class Solution {
+
+    class QueueNode {
+        public String data;
+        public int step;
+
+        public QueueNode(String str, int n) {
+            data = str;
+            step = n;
+        }
+    }
+
     public int ladderLength(String start, String end, HashSet<String> dict) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        class QueueNode {
-            public String data;
-            public int step;
-
-            public QueueNode(String str, int n) {
-                data = str;
-                step = n;
-            }
-        }
         if (start.equals(end))
             return 0;
         HashSet<String> visited = new HashSet<String>();
