@@ -10,50 +10,40 @@
  * }
  */
 public class Solution {
-    public ListNode sortList(ListNode head) {
-        if( head == null || head.next == null )
-            return head;
-        ListNode slow = head;
-        ListNode fast = head;
-        while( fast.next != null && fast.next.next != null ) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        fast = slow;
-        slow = slow.next;
-        fast.next = null;
-        fast = sortList(head);
-        slow = sortList(slow);
-        return merge(fast,slow);
+  public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null)
+      return head;
+    ListNode fast = head;
+    ListNode slow = head;
+    while (fast.next != null && fast.next.next != null) {
+      fast = fast.next.next;
+      slow = slow.next;
     }
+    fast = slow.next;
+    slow.next = null;
+    slow = sortList(head);
+    fast = sortList(fast);
+    return merge(slow, fast);
+  }
 
-    public ListNode merge(ListNode head1, ListNode head2) {
-        if( head1 == null ) return head2;
-        if( head2 == null ) return head1;
-        ListNode res = null;
-        ListNode pre = null;
-        if( head1.val < head2.val ) {
-            res = head1;
-            head1 = head1.next;
-        } else {
-            res = head2;
-            head2 = head2.next;
-        }
-        pre = res;
-        while( head1 != null && head2 != null ) {
-            if( head1.val < head2.val ) {
-                pre.next = head1;
-                head1 = head1.next;
-            } else {
-                pre.next = head2;
-                head2 = head2.next;
-            }
-            pre = pre.next;
-        }
-        if( head1 != null )
-            pre.next = head1;
-        else
-            pre.next = head2;
-        return res;
+  private ListNode merge(ListNode slow, ListNode fast) {
+    ListNode head = new ListNode(0);
+    ListNode cur = head;
+    while (slow != null && fast != null) {
+      if (slow.val < fast.val) {
+        cur.next = slow;
+        slow = slow.next;
+      } else {
+        cur.next = fast;
+        fast = fast.next;
+      }
+      cur = cur.next;
     }
+    if (slow != null) {
+      cur.next = slow;
+    } else if (fast != null) {
+      cur.next = fast;
+    }
+    return head.next;
+  }
 }
