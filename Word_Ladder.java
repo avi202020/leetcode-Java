@@ -1,4 +1,44 @@
 public class Solution {
+  public int ladderLength(String start, String end, Set<String> dict) {
+    if( start.equals(end) || !dict.contains(end) || (start.length() != end.length()) )
+      return 0;
+    if( dict == null || dict.size() == 0 )
+      return 0;
+    Queue<String> queue = new LinkedList<String>();
+    queue.add(start);
+    dict.remove(start);
+    int step = 1;
+    while( !queue.isEmpty() ) {
+      int size = queue.size();
+      for( int i = 0; i < size; ++i ) {
+        String current = queue.poll();
+        for( int j = 0; j < current.length(); ++j ) {
+          for( char c = 'a'; c <= 'z'; ++c ) {
+            if( current.charAt(j) == c )
+              continue;
+            String tmp = replace(current, j, c);
+            if( tmp.equals(end) )
+              return step + 1;
+            if( dict.contains(tmp) ) {
+              queue.offer(tmp);
+              dict.remove(tmp);
+            }
+          }
+        }
+      }
+      step++;
+    }
+    return 0;
+  }
+  public String replace(String word, int pos, char c) {
+    char[] str = word.toCharArray();
+    str[pos] = c;
+    return new String(str);
+  }
+}
+
+
+public class Solution {
 
     class QueueNode {
         public String data;
