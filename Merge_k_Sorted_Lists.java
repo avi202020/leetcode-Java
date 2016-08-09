@@ -10,47 +10,33 @@
  * }
  */
 public class Solution {
-	public ListNode mergeKLists(ArrayList<ListNode> lists) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		if (lists == null || lists.isEmpty())
-			return null;
-		Comparator<ListNode> comparator = new Comparator<ListNode>() {
-			@Override
-			public int compare(ListNode n1, ListNode n2) {
-				if (n1.val < n2.val)
-					return -1;
-				else if (n1.val > n2.val)
-					return 1;
-				else
-					return 0;
-			}
-		};
-		ListNode head = null;
-		ListNode pre = null;
-		PriorityQueue<ListNode> heap = new PriorityQueue<ListNode>( lists.size(), comparator );
-		for (int i = 0; i < lists.size(); ++i) {
-			if( lists.get(i) != null) {
-				heap.add(lists.get(i));
-			}
-		}
-		while (!heap.isEmpty()) {
-			if( head == null ) {
-				head = heap.poll();
-				pre = head;
-				if( head.next != null ) {
-					heap.add(head.next);
-				}
-			}
-			else {
-				ListNode node = heap.poll();
-				pre.next = node;
-				pre = node;
-				if( node.next != null ) {
-					heap.add(node.next);
-				}
-			}
-		}
-		return head;
-	}
+  public ListNode mergeKLists(ListNode[] lists) {
+    ListNode dummyHead = new ListNode(-1);
+    ListNode pre = dummyHead;
+    PriorityQueue<ListNode> heap = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
+      @Override
+      public int compare(ListNode o1, ListNode o2) {
+        if (o1.val < o2.val) {
+          return -1;
+        } else if (o1.val > o2.val) {
+          return 1;
+        }
+        return 0;
+      }
+    });
+    for (int i = 0; i < lists.length; ++i) {
+      if (lists[i] != null) {
+        heap.offer(lists[i]);
+      }
+    }
+    while (!heap.isEmpty()) {
+      ListNode cur = heap.poll();
+      pre.next = cur;
+      pre = cur;
+      if (cur.next != null) {
+        heap.offer(cur.next);
+      }
+    }
+    return dummyHead.next;
+  }
 }
