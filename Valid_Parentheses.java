@@ -1,25 +1,28 @@
 public class Solution {
   public boolean isValid(String s) {
-    Stack<Character> stk = new Stack<Character>();
-    for( int i = 0; i < s.length(); ++i ) {
-      char cur = s.charAt(i);
-      if( cur == '(' ||  cur == '[' || cur == '{' ) {
-        stk.push(cur);
+    Stack<Character> stack = new Stack<Character>();
+    for (int i = 0; i < s.length(); ++i) {
+      char ch = s.charAt(i);
+      if (ch == '(' || ch == '[' || ch == '{') {
+        stack.push(ch);
       } else {
-        if( stk.isEmpty() )
+        if (stack.isEmpty()) {
           return false;
-        if( cur == ')' && stk.peek() == '(' )
-          stk.pop();
-        else if ( cur == ']' && stk.peek() == '[' )
-          stk.pop();
-        else if ( cur == '}' && stk.peek() == '{' )
-          stk.pop();
-        else
+        }
+        char pre = stack.pop();
+        if (ch == ')' && pre != '(') {
           return false;
+        } else if (ch == ']' && pre != '[') {
+          return false;
+        } else if (ch == '}' && pre != '{') {
+          return false;
+        }
       }
     }
-    if( !stk.isEmpty() )
+    if (!stack.isEmpty()) {
       return false;
+    }
     return true;
   }
 }
+
