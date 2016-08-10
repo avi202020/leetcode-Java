@@ -7,21 +7,38 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+// solution 1.
 public class Solution {
-	public boolean isValidBST(TreeNode root) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		int max = Integer.MAX_VALUE;
-		int min = Integer.MIN_VALUE;
-		return isValidBST( root, min, max );
-	}
-	public boolean isValidBST( TreeNode root, int min, int max )
-	{
-		if( root == null ) return true;
-		if( root.val <= min || root.val >= max )
-			return false;
-		boolean bleft = isValidBST( root.left, min, root.val );
-		boolean bright = isValidBST( root.right, root.val, max );
-		return bleft && bright;
-	}
+  public boolean isValidBST(TreeNode root) {
+    long min = Long.MIN_VALUE;
+    long max = Long.MAX_VALUE;
+    return isValidBSTHelper(root, min, max);
+  }
+  public boolean isValidBSTHelper(TreeNode root, long min, long max) {
+    if (root == null) {
+      return true;
+    }
+    if (root.val <= min || root.val >= max) {
+      return false;
+    }
+    return isValidBSTHelper(root.left, min, root.val) && isValidBSTHelper(root.right, root.val, max);
+  }
+}
+
+// solution 2.
+public class Solution {
+  TreeNode pre = null;
+  public boolean isValidBST(TreeNode root) {
+    if (root == null) {
+      return true;
+    }
+    if (!isValidBST(root.left)) {
+      return false;
+    }
+    if (pre != null && pre.val >= root.val) {
+      return false;
+    }
+    pre = root;
+    return isValidBST(root.right);
+  }
 }
