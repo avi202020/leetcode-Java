@@ -42,25 +42,30 @@ public class Solution {
 
 public class Solution {
   public void connect(TreeLinkNode root) {
-    // Start typing your Java solution below
-    // DO NOT write main() function
-    ArrayList<TreeLinkNode> queue = new ArrayList<TreeLinkNode>();
-    if( root == null ) return;
+    if (root == null) {
+      return;
+    }
+    List<TreeLinkNode> queue = new ArrayList<TreeLinkNode>();
     queue.add(root);
     int cur = 0;
-    while( cur < queue.size() ) {
+    while (cur < queue.size()) {
       int end = queue.size();
-      int head = cur;
-      while( cur < end ) {
-        if( queue.get(cur).left != null )
-          queue.add( queue.get(cur).left );
-        if( queue.get(cur).right != null )
-          queue.add( queue.get(cur).right );
+      List<TreeLinkNode> level = new ArrayList<TreeLinkNode>();
+      while (cur < end) {
+        TreeLinkNode node = queue.get(cur);
+        level.add(node);
+        if (node.left != null) {
+          queue.add(node.left);
+        }
+        if (node.right != null) {
+          queue.add(node.right);
+        }
         cur++;
       }
-      for( int i = head; i < end - 1; ++i )
-        queue.get(i).next = queue.get(i+1);
-      queue.get(cur-1).next = null;
+      for (int i = 0; i < level.size() - 1; ++i) {
+        level.get(i).next = level.get(i + 1);
+      }
+      level.get(level.size() - 1).next = null;
     }
   }
 }
