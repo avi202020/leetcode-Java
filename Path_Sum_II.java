@@ -9,33 +9,31 @@
  */
 
 public class Solution {
-	public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
-		if( root == null ) return ans;
-		ArrayList<Integer> path = new ArrayList<Integer>();
-		dfs( root, sum, path, ans );
-		return ans;
-	}
-	public void dfs( TreeNode root, int sum, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> ans )
-	{
-		if( root.left == null && root.right == null )
-		{
-			if( sum == root.val )
-			{
-				path.add( root.val );
-				ArrayList<Integer> newline = new ArrayList<Integer>(path);
-				ans.add(newline);
-				path.remove( path.size() - 1 );
-			}
-			return;
-		}
-		path.add(root.val);
-		if( root.left != null )
-			dfs( root.left, sum - root.val, path, ans );
-		if( root.right != null )
-			dfs( root.right, sum - root.val, path, ans );
-		path.remove( path.size() - 1 );
-	}
+  public List<List<Integer>> pathSum(TreeNode root, int sum) {
+    List<List<Integer>> paths = new ArrayList<List<Integer>>();
+    if (root == null) {
+      return paths;
+    }
+    List<Integer> path = new ArrayList<Integer>();
+    pathSumHelper(root, sum, path, paths);
+    return paths;
+  }
+  public void pathSumHelper(TreeNode root, int sum, List<Integer> path, List<List<Integer>> paths) {
+    if (root.left == null && root.right == null) {
+      if (sum == root.val) {
+        List<Integer> newPath = new ArrayList<Integer>(path);
+        newPath.add(root.val);
+        paths.add(newPath);
+      }
+      return;
+    }
+    path.add(root.val);
+    if (root.left != null) {
+      pathSumHelper(root.left, sum - root.val, path, paths);
+    }
+    if (root.right != null) {
+      pathSumHelper(root.right, sum - root.val, path, paths);
+    }
+    path.remove(path.size() - 1);
+  }
 }
