@@ -3,54 +3,76 @@
  * TreeNode right; TreeNode(int x) { val = x; } }
  */
 
-// Solution 1. Naive and trivial solution using recursion, O(n) time, O(logn)
-// space
+// Solution 1. Naive solution using recursion, O(n) time, O(logn) space
 public class Solution {
-    public ArrayList<Integer> inorderTraversal(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        ArrayList<Integer> ans = new ArrayList<Integer>();
-        inOrderCore(root, ans);
-        return ans;
+  public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> preorder = new ArrayList<Integer>();
+    preorderTraversalHelper(root, preorder);
+    return preorder;
+  }
+  public void preorderTraversalHelper(TreeNode root, List<Integer> preorder) {
+    if (root != null) {
+      preorder.add(root.val);
+      preorderTraversalHelper(root.left, preorder);
+      preorderTraversalHelper(root.right, preorder);
     }
-
-    public void inOrderCore(TreeNode root, ArrayList<Integer> list) {
-        if (root != null) {
-            list.add(root.val);
-            inOrderCore(root.left, list);
-            inOrderCore(root.right, list);
-        }
-    }
+  }
 }
 
-// Solution 2. Morris traversal algorithm, O(n) time, O(1) space
+// Solution 2. Iterative solution using stack, O(n) time, O(logn) space
 public class Solution {
-    public ArrayList<Integer> preorderTraversal(TreeNode root) {
-        ArrayList<Integer> ans = new ArrayList<Integer>();
-        morrisPreorder(root, ans);
-        return ans;
+  public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> preorder = new ArrayList<Integer>();
+    if (root == null) {
+      return preorder;
     }
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    stack.push(root);
+    while (!stack.isEmpty()) {
+      TreeNode node = stack.pop();
+      preorder.add(node.val);
+      if (node.right != null) {
+        stack.push(node.right);
+      }
+      if (node.left != null) {
+        stack.push(node.left);
+      }
+    }
+    return preorder;
+  }
+}
 
-    public void morrisPreorder(TreeNode root, ArrayList<Integer> ans) {
-        TreeNode cur = root;
-        TreeNode prev = null;
-        while (cur != null) {
-            if (cur.left == null) {
-                ans.add(cur.val);
-                cur = cur.right;
-            } else if (cur.left != null) {
-                prev = cur.left;
-                while (prev.right != null && prev.right != cur)
-                    prev = prev.right;
-                if (prev.right == null) {
-                    prev.right = cur;
-                    ans.add(cur.val);
-                    cur = cur.left;
-                } else if (prev.right == cur) {
-                    prev.right = null;
-                    cur = cur.right;
-                }
-            }
+// Solution 3. Morris traversal algorithm, O(n) time, O(1) space
+public class Solution {
+  public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> preorder = new ArrayList<Integer>();
+    morrisPreorder(root, preorder);
+    return preorder;
+  }
+  public void morrisPreorder(TreeNode root, List<Integer> preorder) {
+    TreeNode cur = root;
+    TreeNode pre = null;
+    while (cur != null) {
+      if (cur.left == null) {
+        // if there is no left subtree, visit cur and go right
+        preorder.add(cur.val);
+        cur = cur.right;
+      } else {
+        pre = cur.left;
+        while (pre.right != null && pre.right != cur) {
+          pre = pre.right;
         }
+        if (pre.right == null) {
+          // cur's left subtree has not been visited, go left first
+          preorder.add(cur.val);
+          pre.right = cur;
+          cur = cur.left;
+        } else {
+          // cur's left subtree has been visited, visit cur and go right
+          pre.right = null;
+          cur = cur.right;
+        }
+      }
     }
+  }
 }
