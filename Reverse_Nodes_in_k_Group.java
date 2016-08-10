@@ -1,19 +1,20 @@
 public class Solution {
   public ListNode reverseKGroup(ListNode head, int k) {
-    if( k == 0 || k == 1 )
+    if (k == 0 || k == 1)
       return head;
     ListNode dummy = new ListNode(0);
     dummy.next = head;
     ListNode prev = dummy;
     ListNode cur = dummy;
-    while( true ) {
-      for( int i = 1; i <= k; ++i ) {
-        if( cur != null )
+    while (true) {
+      for (int i = 1; i <= k; ++i) {
+        if (cur != null) {
           cur = cur.next;
-        else
+        } else {
           break;
+        }
       }
-      if( cur == null )
+      if (cur == null)
         break;
       ListNode oldhead = prev.next;
       ListNode next = cur.next;
@@ -27,8 +28,9 @@ public class Solution {
     return dummy.next;
   }
   public ListNode _reverseLinkList(ListNode head) {
-    if( head == null || head.next == null )
+    if (head == null || head.next == null) {
       return head;
+    }
     ListNode next = head.next;
     ListNode newhead = _reverseLinkList(head.next);
     next.next = head;
