@@ -10,19 +10,22 @@
 public class Solution {
   private int sum;
   public int sumNumbers(TreeNode root) {
-    // Start typing your Java solution below
-    // DO NOT write main() function
+    if (root == null) {
+      return 0;
+    }
     sum = 0;
-    _sumNumbers( root, 0 );
+    sumNumbersHelper(root, 0);
     return sum;
   }
-  public void _sumNumbers( TreeNode root, int num )
-  {
-    if( root == null ) return;
+  public void sumNumbersHelper(TreeNode root, int num) {
+    if (root == null) {
+      return;
+    }
     num = num * 10 + root.val;
-    if( root.left == null && root.right == null )
+    if (root.left == null && root.right == null) {
       sum += num;
-    _sumNumbers( root.left, num );
-    _sumNumbers( root.right, num );
+    }
+    sumNumbersHelper(root.left, num);
+    sumNumbersHelper(root.right, num);
   }
 }
