@@ -1,19 +1,22 @@
 public class Solution {
-	public int reverse(int x) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		boolean pos = true;
-		if( x < 0 ) pos = false;
-		x = x < 0 ? -x : x;
-		int ans = 0;
-		while( x != 0 )
-		{
-			int num = x % 10;
-			x = x / 10;
-			ans = ans * 10 + num;
-		}
-		if( pos == false )
-			ans = -ans;
-		return ans;
-	}
+  public int reverse(int x) {
+    boolean positive = true;
+    if (x < 0) {
+      positive = false;
+      x = -x;
+    }
+    long res = 0;
+    while (x != 0) {
+      int digit = x % 10;
+      x = x / 10;
+      res = res * 10 + digit;
+    }
+    if (res < Integer.MIN_VALUE || res > Integer.MAX_VALUE) {
+      return 0;
+    }
+    if (!positive) {
+      return (int)-res;
+    }
+    return (int)res;
+  }
 }
