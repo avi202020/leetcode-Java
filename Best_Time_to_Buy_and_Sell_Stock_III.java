@@ -1,35 +1,29 @@
 public class Solution {
-    public int maxProfit(int[] prices) {
-        if( prices.length <= 1 )
-            return 0;
-
-        int[] left = new int[prices.length];
-        int[] right = new int[prices.length];
-
-        process(prices, left, right);  
-
-        int max = 0;
-        for( int i = 0; i < prices.length; ++i ) {
-            max = Math.max(max, left[i] + right[i]);
-        }
-
-        return max;
+  public int maxProfit(int[] prices) {
+    if (prices == null || prices.length <= 1) {
+      return 0;
     }
-
-    public void process(int[] prices, int[] left, int[] right) {
-        left[0] = 0;
-        int min = prices[0];
-        for( int i = 1; i < prices.length; ++i ) {
-            left[i] = Math.max(left[i-1], prices[i] - min);
-            if( prices[i] < min )
-                min = prices[i];
-        }
-
-        int max = prices[prices.length - 1];
-        for( int i = prices.length - 2; i >= 0; --i ) {
-            right[i] = Math.max(right[i+1], max - prices[i]);
-            if( prices[i] > max )
-                max = prices[i];
-        }
+    int maxProfit = 0;
+    // calculate the max profit of first transaction
+    int[] maxProfits1 = new int[prices.length];
+    maxProfits1[0] = 0;
+    int lowest = prices[0];
+    for (int i = 1; i < prices.length; ++i) {
+      maxProfits1[i] = Math.max(maxProfits1[i-1], prices[i] - lowest);
+      lowest = Math.min(lowest, prices[i]);
     }
+    // calculate the max profit of second transaction
+    int[] maxProfits2 = new int[prices.length];
+    int highest = prices[prices.length - 1];
+    maxProfits2[prices.length - 1] = 0;
+    for (int i = prices.length - 2; i >= 0; --i) {
+      maxProfits2[i] = Math.max(maxProfits2[i+1], highest - prices[i]);
+      highest = Math.max(highest, prices[i]);
+    }
+    // calculate the final max profit
+    for (int i = 0; i < prices.length; ++i) {
+      maxProfit = Math.max(maxProfit, maxProfits1[i] + maxProfits2[i]);
+    }
+    return maxProfit;
+  }
 }
