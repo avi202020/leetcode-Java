@@ -1,27 +1,30 @@
+// Solution 1. DFS
 public class Solution {
-  public int ladderLength(String start, String end, Set<String> dict) {
-    if( start.equals(end) || !dict.contains(end) || (start.length() != end.length()) )
+  public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
+    if (beginWord.equals(endWord) || !wordList.contains(endWord) || beginWord.length() != endWord.length()) {
       return 0;
-    if( dict == null || dict.size() == 0 )
+    }
+    if (wordList.size() == 0) {
       return 0;
+    }
     Queue<String> queue = new LinkedList<String>();
-    queue.add(start);
-    dict.remove(start);
+    queue.offer(beginWord);
+    wordList.remove(beginWord);
     int step = 1;
-    while( !queue.isEmpty() ) {
+    while (!queue.isEmpty()) {
       int size = queue.size();
-      for( int i = 0; i < size; ++i ) {
+      for (int i = 0; i < size; ++i) {
         String current = queue.poll();
-        for( int j = 0; j < current.length(); ++j ) {
-          for( char c = 'a'; c <= 'z'; ++c ) {
-            if( current.charAt(j) == c )
-              continue;
-            String tmp = replace(current, j, c);
-            if( tmp.equals(end) )
-              return step + 1;
-            if( dict.contains(tmp) ) {
-              queue.offer(tmp);
-              dict.remove(tmp);
+        for (int j = 0; j < current.length(); ++j) {
+          for (char c = 'a'; c <= 'z'; ++c) {
+            if (current.charAt(j) != c) {
+              String tmp = replace(current, j, c);
+              if (tmp.equals(endWord)) {
+                return step + 1;
+              } else if (wordList.contains(tmp)) {
+                queue.offer(tmp);
+                wordList.remove(tmp);
+              }
             }
           }
         }
@@ -30,14 +33,14 @@ public class Solution {
     }
     return 0;
   }
-  public String replace(String word, int pos, char c) {
+  private String replace(String word, int pos, char c) {
     char[] str = word.toCharArray();
     str[pos] = c;
     return new String(str);
   }
 }
 
-
+// Solution 2. BFS
 public class Solution {
 
   class QueueNode {
