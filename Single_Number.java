@@ -1,8 +1,7 @@
-public class Solution {
-  public int singleNumber(int[] A) {
-    int ans = 0;
-    for( int i = 0; i < A.length; ++i )
-      ans = ans ^ A[i];
-    return ans;
+public int singleNumber(int[] nums) {
+    int single = 0;
+    for (int i = 0; i < nums.length; ++i) {
+      single = single ^ nums[i];
+    }
+    return single;
   }
-}
