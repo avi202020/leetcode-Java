@@ -1,32 +1,26 @@
 public class Solution {
-	public ArrayList<ArrayList<Integer>> permute(int[] num) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
-		dfs( num, 0, ans );
-		return ans;
-	}
-	public void dfs( int[] num, int depth, ArrayList<ArrayList<Integer>> ans )
-	{
-		if( depth >= num.length )
-		{
-			ArrayList<Integer> newline = new ArrayList<Integer>();
-			for( int i = 0; i < num.length; ++i )
-				newline.add( num[i] );
-			ans.add( newline );
-			return;
-		}
-		for( int i = depth; i < num.length; ++i )
-		{
-			swap( num, depth, i );
-			dfs( num, depth + 1, ans );
-			swap( num, depth, i );
-		}
-	}
-	public void swap( int[] num, int i, int j )
-	{
-		int tmp = num[i];
-		num[i] = num[j];
-		num[j] = tmp;
-	}
+  public List<List<Integer>> permute(int[] nums) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    permuteHelper(nums, 0, res);
+    return res;
+  }
+  private void permuteHelper(int[] nums, int depth, List<List<Integer>> res) {
+    if (depth >= nums.length) {
+      List<Integer> line = new ArrayList<Integer>();
+      for (int i = 0; i < nums.length; ++i) {
+        line.add(nums[i]);
+      }
+      res.add(line);
+      return;
+    }
+    for (int i = depth; i < nums.length; ++i ) {
+      int tmp = nums[depth];
+      nums[depth] = nums[i];
+      nums[i] = tmp;
+      permuteHelper(nums, depth + 1, res);
+      tmp = nums[depth];
+      nums[depth] = nums[i];
+      nums[i] = tmp;
+    }
+  }
 }
