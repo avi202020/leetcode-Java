@@ -1,18 +1,16 @@
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
+ *     ListNode(int x) { val = x; }
  * }
  */
 public class Solution {
   public ListNode sortList(ListNode head) {
-    if (head == null || head.next == null)
+    if (head == null || head.next == null) {
       return head;
+    }
     ListNode fast = head;
     ListNode slow = head;
     while (fast.next != null && fast.next.next != null) {
@@ -25,25 +23,24 @@ public class Solution {
     fast = sortList(fast);
     return merge(slow, fast);
   }
-
-  private ListNode merge(ListNode slow, ListNode fast) {
-    ListNode head = new ListNode(0);
-    ListNode cur = head;
-    while (slow != null && fast != null) {
-      if (slow.val < fast.val) {
-        cur.next = slow;
-        slow = slow.next;
+  private ListNode merge(ListNode p1, ListNode p2) {
+    ListNode dummy = new ListNode(0);
+    ListNode pre = dummy;
+    while (p1 != null && p2 != null) {
+      if (p1.val < p2.val) {
+        pre.next = p1;
+        p1 = p1.next;
       } else {
-        cur.next = fast;
-        fast = fast.next;
+        pre.next = p2;
+        p2 = p2.next;
       }
-      cur = cur.next;
+      pre = pre.next;
     }
-    if (slow != null) {
-      cur.next = slow;
-    } else if (fast != null) {
-      cur.next = fast;
+    if (p1 != null) {
+      pre.next = p1;
+    } else if (p2 != null) {
+      pre.next = p2;
     }
-    return head.next;
+    return dummy.next;
   }
 }
