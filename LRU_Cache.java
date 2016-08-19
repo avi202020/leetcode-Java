@@ -1,42 +1,30 @@
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class LRUCache {
 
-  private LinkedHashMap<Integer, Integer> cache = null;
-  int capacity;
-
+  private LinkedHashMap<Integer, Integer> cache;
+  private int capacity;
   public LRUCache(int capacity) {
-    cache = new LinkedHashMap<Integer, Integer>(capacity);
+    this.cache = new LinkedHashMap<Integer, Integer>(capacity);
     this.capacity = capacity;
   }
 
   public int get(int key) {
-    boolean found = cache.containsKey(key);
-    if (found == true) {
-      int value = cache.get(key);
+    int res = -1;
+    if (cache.containsKey(key)) {
+      res = cache.get(key);
       cache.remove(key);
-      cache.put(key, value);
-      return value;
+      cache.put(key, res);
     }
-    return -1;
+    return res;
   }
 
   public void set(int key, int value) {
-    boolean found = cache.containsKey(key);
-    if (found == true) {
+    if (cache.containsKey(key)) {
       cache.remove(key);
-      cache.put(key, value);
-    } else if (found == false) {
-      if (cache.size() < this.capacity) {
-        cache.put(key, value);
-      } else if (cache.size() == this.capacity) {
-        Iterator it = (Iterator) cache.entrySet().iterator();
-        Map.Entry pairs = (Map.Entry) it.next();
-        cache.remove(pairs.getKey());
-        cache.put(key, value);
-      }
+    } else if (cache.size() >= this.capacity) {
+      Iterator<Map.Entry<Integer, Integer>> it = cache.entrySet().iterator();
+      Map.Entry<Integer, Integer> pairs = it.next();
+      cache.remove(pairs.getKey());
     }
+    cache.put(key, value);
   }
 }
