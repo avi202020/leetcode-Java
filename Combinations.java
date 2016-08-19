@@ -1,29 +1,24 @@
 public class Solution {
-    public ArrayList<ArrayList<Integer>> combine(int n, int k) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> line = new ArrayList<Integer>();
-        dfs( n, k, 1, ans, line );
-        return ans;
+  public List<List<Integer>> combine(int n, int k) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    List<Integer> line = new ArrayList<Integer>();
+    combineHelper(n, k, 1, line, res);
+    return res;
+  }
+  private void combineHelper(int n, int k, int depth, List<Integer> line, List<List<Integer>> res) {
+    if (depth > n) {
+      if (line.size() == k) {
+        List<Integer> ans = new ArrayList<Integer>(line);
+        res.add(ans);
+      }
+      return;
     }
-    public void dfs( int n, int k, int depth, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> line )
-    {
-        if( depth > n )
-        {
-            if( line.size() == k )
-            {
-                ArrayList<Integer> tmp = new ArrayList<Integer>(line);
-                ans.add(tmp);
-            }
-            return;
-        }
-        //take this element
-        line.add( depth );
-        dfs( n, k, depth + 1, ans, line );
-        line.remove( line.size() - 1 );
-        //do not take this element
-        dfs( n, k, depth + 1, ans, line );
-    }
+    // do not take this element
+    combineHelper(n, k, depth + 1, line, res);
+    // take this element
+    line.add(depth);
+    combineHelper(n, k, depth + 1, line, res);
+    // backtracking
+    line.remove(line.size() - 1);
+  }
 }
-
