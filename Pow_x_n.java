@@ -1,24 +1,18 @@
 public class Solution {
-	public double pow(double x, int n) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		boolean positive = true;
-		if( n == 0 ) return 1;
-		if( n < 0 ) {
-			positive = false;
-			n = -n;
-		}
-		double power = x;
-		double ans = 1;
-		while( n > 0 ) {
-			if( n % 2 == 1 ) {
-				ans = ans * power;
-			}
-			power = power * power;
-			n = n / 2;
-		}
-		if( !positive )
-			return 1/ans;
-		return ans;
-	}
+  public double myPow(double x, int n) {
+    if (n < 0) {
+      return 1 / power(x, -n);
+    }
+    return power(x, n);
+  }
+  public double power(double x, int n) {
+    if (n == 0) {
+      return 1;
+    }
+    double v = power(x, n / 2);
+    if (n % 2 == 0) {
+      return v * v;
+    }
+    return v * v * x;
+  }
 }
