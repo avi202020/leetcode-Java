@@ -12,7 +12,7 @@ public class Solution {
         } else {
           left = mid + 1;
         }
-      } else if (nums[mid] <= nums[left]) {
+      } else {
         if (target >= nums[mid] && target <= nums[right]) {
           left = mid + 1;
         } else {
