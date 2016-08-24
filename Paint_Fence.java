@@ -11,8 +11,8 @@ public class Solution {
     dp[1] = k;
     dp[2]= k + k * (k - 1);
     for (int i = 3; i <= n; i++) {
-      // (k - 1) * dp[i - 2] means that (i) is in same color as (i-1)
-      // (k - 1) * dp[i - 1] means that (i) is in different color as (i-1)
+      // (k - 1) * dp[i - 2] means that (i) and (i-1) are same, (i-1) and (i-2) are different 
+      // (k - 1) * dp[i - 1] means that (i) and (i-1) are different
       dp[i] = (k - 1) * dp[i - 2] + (k - 1) * dp[i - 1];
     }
     return dp[n];
