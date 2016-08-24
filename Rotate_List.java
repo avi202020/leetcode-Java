@@ -3,41 +3,38 @@
  * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
+ *     ListNode(int x) { val = x; }
  * }
  */
-
 public class Solution {
-	public ListNode rotateRight(ListNode head, int n) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		if( head == null ) return head;
-		ListNode cur = head;
-		int len = 0;
-		while( cur != null )
-		{
-			len++;
-			cur = cur.next;
-		}
-		n = n % len;
-		if( n == 0 ) return head;
-		ListNode tmphead = new ListNode(0);
-		tmphead.next = head;
-		ListNode slowp = tmphead;
-		ListNode fastp = head;
-		int cnt = 1;
-		while( fastp.next != null )
-		{
-			if( cnt != n ) cnt++;
-			else slowp = slowp.next;
-			fastp = fastp.next;
-		}
-		tmphead = slowp.next;
-		fastp.next = head;
-		slowp.next = null;
-		return tmphead;
-	}
+  public ListNode rotateRight(ListNode head, int k) {
+    if (head == null) {
+      return head;
+    }
+    ListNode cur = head;
+    int len = 0;
+    while (cur != null) {
+      len++;
+      cur = cur.next;
+    }
+    k = k % len;
+    if (k == 0) {
+      return head;
+    }
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode fast = dummy;
+    ListNode slow = dummy;
+    for (int i = 0; i < k; i++) {
+      fast = fast.next;
+    }
+    while (fast.next != null) {
+      fast = fast.next;
+      slow = slow.next;
+    }
+    ListNode newHead = slow.next;
+    slow.next = null;
+    fast.next = head;
+    return newHead;
+  }
 }
