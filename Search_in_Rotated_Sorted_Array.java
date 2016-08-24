@@ -1,4 +1,3 @@
-// Solution 1. binary search worst case O(n) time
 public class Solution {
   public int search(int[] nums, int target) {
     int left = 0;
@@ -22,18 +21,5 @@ public class Solution {
       }
     }
     return -1;
-  }
-}
-
-
-// Solution 2.
-public class Solution {
-  public boolean search(int[] A, int target) {
-    for (int i = 0; i < A.length; i ++) {
-      if (A[i] == target) {
-        return true;
-      }
-    }
-    return false;
   }
 }
