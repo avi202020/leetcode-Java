@@ -32,21 +32,19 @@ public class Solution {
 //                  2. better method
 //************************************************************
 public class Solution {
-	public int maxArea(int[] height) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		int maxarea = Integer.MIN_VALUE;
-		int left = 0;
-		int right = height.length - 1;
-		while( left < right )
-		{
-			int area = Math.min( height[left], height[right] ) * ( right - left );
-			if( area > maxarea ) maxarea = area;
-			if( height[left] < height[right] )
-				left++;
-			else 
-				right--;
-		}
-		return maxarea;
-	}
+  public int maxArea(int[] height) {
+    int maxarea = Integer.MIN_VALUE;
+    int left = 0;
+    int right = height.length - 1;
+    while (left < right) {
+      int area = Math.min(height[left], height[right]) * (right - left);
+      maxarea = Math.max(maxarea, area);
+      if (height[left] < height[right]) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+    return maxarea;
+  }  
 }
