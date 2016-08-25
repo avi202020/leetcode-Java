@@ -1,4 +1,49 @@
-// Solution 1. segment tree solution, but got TLE
+// Solution 1. fenwick tree solution
+public class NumArray {
+
+  int[] array;
+  int[] helper;
+
+  public NumArray(int[] nums) {
+    array = new int[nums.length];
+    helper = new int[nums.length + 1];
+    for (int i = 0; i < nums.length; i++) {
+      array[i] = nums[i];
+    }
+    for (int i = 0; i < nums.length; i++) {
+      add(i + 1, nums[i]);
+    }
+  }
+  private void add(int pos, int value) {
+    while (pos < helper.length) {
+      helper[pos] += value;
+      pos += lowBit(pos);
+    }
+  }
+
+  private int lowBit(int pos) {
+    return pos & (-pos);
+  }
+  private int sum(int pos) {
+    int rt = 0;
+    while (pos > 0) {
+      rt += helper[pos];
+      pos -= lowBit(pos);
+    }
+    return rt;
+  }
+  void update(int i, int val) {
+    int delta = val - array[i];
+    array[i] = val;
+    add(i + 1, delta);
+  }
+  public int sumRange(int i, int j) {
+    return sum(j + 1) - sum(i);
+  }
+}
+
+
+// Solution 2. segment tree solution, but got TLE
 public class NumArray {
 
   SegmentTreeNode root = null;
