@@ -1,23 +1,23 @@
 public class Solution {
-    public int removeDuplicates(int[] A) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if( A.length == 0 ) return 0;
-        int cur = 1;
-        int dup = 1;
-        for( int i = 1; i < A.length; ++i  )
-        {
-            if( A[i] != A[i-1] )
-            {
-                dup = 1;
-                A[cur++] = A[i];
-            }
-            else if( A[i] == A[i-1] && dup < 2 )
-            {
-                dup++;
-                A[cur++] = A[i];
-            }
-        }
-        return cur;
+  public int removeDuplicates(int[] nums) {
+    if (nums.length == 0) {
+      return 0;
     }
+    int cur = 1;
+    int dup = 1;
+    int last = nums[0];
+    for (int i = 1; i < nums.length; ++i) {
+      if (nums[i] != last) {
+        last = nums[i];
+        dup = 1;
+        nums[cur] = nums[i];
+        cur++;
+      } else if (nums[i] == last && dup < 2) {
+        dup++;
+        nums[cur] = nums[i];
+        cur++;
+      }
+    }
+    return cur;
+  }
 }
