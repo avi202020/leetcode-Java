@@ -1,5 +1,5 @@
 public class Solution {
-    public boolean isPalindrome(String s) {
+  public boolean isPalindrome(String s) {
     if (s.length() <= 1) {
       return true;
     }
