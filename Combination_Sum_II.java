@@ -1,35 +1,30 @@
 public class Solution {
-	public ArrayList<ArrayList<Integer>> combinationSum2(int[] candidates, int target) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
-		ArrayList<Integer> line = new ArrayList<Integer>();
-		dfs( candidates, target, 0, 0, ans, line );
-		HashSet<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
-		for( int i = 0; i < ans.size(); ++i )
-		{
-			if( !set.contains( ans.get(i) ) )
-				set.add( ans.get(i) );
-		}
-		ans = new ArrayList<ArrayList<Integer>>(set);
-		return ans;
-	}
-	public void dfs( int[] cand, int target, int depth, int sum, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> line )
-	{
-		if( sum == target )
-		{
-			ArrayList<Integer> tmp = new ArrayList<Integer>(line);
-			Collections.sort(tmp);
-			ans.add(tmp);
-			return;
-		}
-		if( sum > target || depth >= cand.length )
-			return;
-		//take this element    
-		line.add( cand[depth] );
-		dfs( cand, target, depth + 1, sum + cand[depth] , ans, line );
-		line.remove( line.size() - 1 );
-		//do not take this element
-		dfs( cand, target, depth + 1, sum, ans, line );
-	}
+  public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    if (candidates == null || candidates.length == 0) {
+      return res;
+    }
+    Arrays.sort(candidates);
+    List<Integer> item = new ArrayList<Integer>();
+    combinationSum2Helper(candidates, 0, target, item, res);
+    return res;
+  }
+  public void combinationSum2Helper(int[] candidates, int index, int target, List<Integer> item, List<List<Integer>> res) {
+    if (target == 0) {
+      List<Integer> temp = new ArrayList<Integer>(item);
+      res.add(temp);
+      return;
+    }
+    for (int i = index; i < candidates.length; i++) {
+      if (i > index && candidates[i] == candidates[i - 1]) {
+        continue;
+      }
+      if (target - candidates[i] < 0) {
+        return;
+      }
+      item.add(candidates[i]);
+      combinationSum2Helper(candidates, i + 1, target - candidates[i], item, res);
+      item.remove(item.size() - 1);
+    }
+  }
 }
