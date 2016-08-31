@@ -7,6 +7,33 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+// Solution 1. BST iterative inorder traversal
+public class Solution {
+  public int kthSmallest(TreeNode root, int k) {
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    TreeNode p = root;
+    while (p != null) {
+      stack.push(p);
+      p = p.left;
+    }
+    int i = 0;
+    while (!stack.isEmpty()) {
+      TreeNode t = stack.pop();
+      i++;
+      if (i == k) {
+        return t.val;
+      }
+      TreeNode r = t.right;
+      while (r != null) {
+        stack.push(r);
+        r = r.left;
+      }
+    }
+    return -1;
+  }
+}
+
+// Solution 2. using the number of children
 public class Solution {
   public int kthSmallest(TreeNode root, int k) {
     if (k == 1) {
