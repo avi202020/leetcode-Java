@@ -9,7 +9,7 @@
  */
 public class Solution {
   public int countUnivalSubtrees(TreeNode root) {
-    int[] count=new int[1];
+    int[] count = new int[1];
     countUnivalSubtreesHelper(root,count);
     return count[0];
   }
