@@ -1,5 +1,5 @@
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
@@ -17,14 +17,14 @@ public class Solution {
     return root;
   }
 
-  public TreeNode buildTreeHelper(int[] pre, int index, int start, int n, Map<Integer, Integer> posMap) {
-    if (n == 0) {
+  public TreeNode buildTreeHelper(int[] pre, int index, int start, int len, Map<Integer, Integer> posMap) {
+    if (len == 0) {
       return null;
     }
     TreeNode root = new TreeNode(pre[index]);
     int length = posMap.get(pre[index]) - start;
     root.left = buildTreeHelper(pre, index + 1, start, length, posMap);
-    root.right = buildTreeHelper(pre, index + length + 1, start + length + 1, n - length - 1, posMap);
+    root.right = buildTreeHelper(pre, index + length + 1, start + length + 1, len - length - 1, posMap);
     return root;
   }
 }
