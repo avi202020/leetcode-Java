@@ -10,11 +10,12 @@ public class Solution {
     map.put('M',1000);
     int ans = 0;
     int i = 0;
-    for( i = 0; i < s.length() - 1; ++i ) {
-      if( map.get(s.charAt(i)) < map.get(s.charAt(i+1)) )
+    for (i = 0; i < s.length() - 1; ++i) {
+      if (map.get(s.charAt(i)) < map.get(s.charAt(i+1))) {
         ans = ans - map.get(s.charAt(i));
-      else
+      } else {
         ans = ans + map.get(s.charAt(i));
+      }
     }
     ans = ans + map.get(s.charAt(i));
     return ans;
