@@ -3,13 +3,6 @@ public class Solution {
     if (s == null || s.length() == 0 || s.startsWith("0")) {
       return 0;
     }
-    if (s.length() == 1) {
-      if (s.equals("0")) {
-        return 0;
-      } else {
-        return 1;
-      }
-    }
     int[] dp = new int[s.length() + 1];
     dp[0] = 1;
     dp[1] = 1;
