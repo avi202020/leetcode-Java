@@ -1,24 +1,26 @@
 public class Solution {
-  public List<String> wordBreak(String s, Set<String> dict) {
-    HashMap<String, ArrayList<String>> memo = new HashMap<String, ArrayList<String>>();
-    return _wordBreak(s,dict,memo);
+  public List<String> wordBreak(String s, Set<String> wordDict) {
+    Map<String, List<String>> memo = new HashMap<String, List<String>>();
+    return wordBreak2Helper(s, wordDict, memo);
   }
-  public ArrayList<String> _wordBreak(String s, Set<String> dict, HashMap<String, ArrayList<String>> memo) {
-    if( memo.containsKey(s) )
+  private List<String> wordBreak2Helper(String s, Set<String> dict, Map<String, List<String>> memo) {
+    if (memo.containsKey(s)) {
       return memo.get(s);
-    ArrayList<String> ans = new ArrayList<String>();
+    }
+    List<String> ans = new ArrayList<String>();
     int len = s.length();
-    if( len <= 0 )
+    if (len <= 0) {
       return ans;
-    for( int i = 1; i <= len; ++i ) {
+    }
+    for (int i = 1; i <= len; ++i) {
       String prefix = s.substring(0, i);
-      if( dict.contains(prefix) ) {
-        if( prefix.length() == s.length() ) {
+      if (dict.contains(prefix)) {
+        if (prefix.length() == s.length()) {
           ans.add(s);
         } else {
           String subfix = s.substring(i);
-          ArrayList<String> tmp = _wordBreak(subfix, dict, memo);
-          for( String item : tmp ) {
+          List<String> tmp = wordBreak2Helper(subfix, dict, memo);
+          for (String item : tmp) {
             item = prefix + " " + item;
             ans.add(item);
           }
@@ -28,5 +30,4 @@ public class Solution {
     memo.put(s, ans);
     return ans;
   }
-
 }
