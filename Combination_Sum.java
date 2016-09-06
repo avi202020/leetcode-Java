@@ -16,9 +16,6 @@ public class Solution {
       return;
     }
     for (int i = index; i < candidates.length; i++) {
-      if (i > 0 && candidates[i] == candidates[i - 1]) {
-        continue;
-      }
       if (target - candidates[i] < 0) {
         return;
       }
