@@ -1,19 +1,20 @@
 // Solution 1. O(n) time, 0(1) space
-public void sortColors(int[] nums) {
+public class Solution {
+  public void sortColors(int[] nums) {
     int index0 = 0;
     int cur = 0;
     int index2 = nums.length - 1;
     while (cur <= index2) {
       if (nums[cur] == 1) {
         cur++;
+      } else if (nums[cur] == 2) {
+        swap(nums, cur, index2);
+        index2--;
       } else if (nums[cur] == 0) {
         swap(nums, cur, index0);
         index0++;
         cur++;
-      } else if (nums[cur] == 2) {
-        swap(nums, cur, index2);
-        index2--;
-      }
+      } 
     }
   }
   private void swap(int[] nums, int i, int j) {
@@ -21,6 +22,7 @@ public void sortColors(int[] nums) {
     nums[i] = nums[j];
     nums[j] = tmp;
   }
+}
 
 // Solution 2. naive solution O(n) time, O(n) space
 public class Solution {
