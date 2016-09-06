@@ -21,18 +21,26 @@ public class Solution {
     if (l2 == null) {
       return l1;
     }
-    ListNode ans = l1.val < l2.val ? l1 : l2;
-    ListNode pre = ans;
-    if (l1.val < l2.val) l1 = l1.next;
-    else l2 = l2.next;
+    ListNode dumpHead = new ListNode(-1);
+    ListNode pre = dumpHead;
     while (l1 != null || l2 != null) {
-      int val1 = l1 == null ? Integer.MAX_VALUE : l1.val;
-      int val2 = l2 == null ? Integer.MAX_VALUE : l2.val;
-      pre.next = val1 < val2 ? l1 : l2;
-      pre = pre.next;
-      if (val1 < val2) l1 = l1 == null ? null : l1.next;
-      else l2 = l2 == null ? null : l2.next;
+      if (l1 == null) {
+        pre.next = l2;
+        break;
+      } else if (l2 == null) {
+        pre.next = l1;
+        break;
+      }
+      if (l1.val < l2.val) {
+        pre.next = l1;
+        pre = l1;
+        l1 = l1.next;
+      } else {
+        pre.next = l2;
+        pre = l2;
+        l2 = l2.next;
+      }
     }
-    return ans;
+    return dumpHead.next;
   }
 }
