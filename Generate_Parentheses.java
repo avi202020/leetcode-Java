@@ -15,12 +15,12 @@ public class Solution {
     if (left < max) {
       sb.append("(");
       generateParenthesisHelper(max, depth + 1, left + 1, sb, res);
-      sb.deleteCharAt( sb.length() - 1 );
+      sb.deleteCharAt(sb.length() - 1);
     }
     if (left > 0) {
       sb.append(")");
       generateParenthesisHelper(max, depth + 1, left - 1, sb, res);
-      sb.deleteCharAt( sb.length() - 1 );
+      sb.deleteCharAt(sb.length() - 1);
     }
   }
 }
