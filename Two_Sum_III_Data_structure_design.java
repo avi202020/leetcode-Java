@@ -11,7 +11,7 @@ public class TwoSum {
     if (!counter.containsKey(number)) {
       counter.put(number, 1);
     } else {
-      counter.put(number, counter.get(counter) + 1);
+      counter.put(number, counter.get(number) + 1);
     }
   }
 
@@ -21,7 +21,7 @@ public class TwoSum {
       int another = value - key;
       if (key != another && counter.containsKey(another)) {
         return true;
-      } else if (counter.get(key) >= 2) {
+      } else if (another == key && counter.get(key) >= 2) {
         return true;
       }
     }
