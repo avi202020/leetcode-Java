@@ -1,38 +1,50 @@
 public class Solution {
   public List<String> restoreIpAddresses(String s) {
-    ArrayList<String> ans = new ArrayList<String>();
-    ArrayList<String> path = new ArrayList<String>();
-    _restoreIpAddress(ans, path, s, 0 );
-    return ans;
+    List<String> res = new ArrayList<>();
+    if(s == null || s.length() < 4 || s.length() > 12) {
+      return res;
+    }
+    List<String> path = new ArrayList<>();
+    restoreIpAddressesHelper(s, 0, path, res);
+    return res;
   }
-  public void _restoreIpAddress(ArrayList<String> ans, ArrayList<String> path, String s, int depth) {
-    if( path.size() == 4 ) {
-      if( depth >= s.length() ) {
-        StringBuilder sb = new StringBuilder();
-        for( int i = 0; i < path.size(); ++i ) {
-          sb.append(path.get(i));
-          sb.append(".");
-        }
-        sb.deleteCharAt(sb.length()-1);
-        ans.add(sb.toString());
+  private void restoreIpAddressesHelper(String s, int depth, List<String> path, List<String> res) {
+    if (path.size() == 4) {
+      if (depth != s.length()) {
+        return;
       }
+      StringBuilder sb = new StringBuilder();
+      for (String tmp : path) {
+        sb.append(tmp);
+        sb.append(".");
+      }
+      sb.deleteCharAt(sb.length()-1);
+      res.add(sb.toString());
       return;
     }
-    for( int i = 1; i <= 3; ++i ) {
-      if( depth + i > s.length() )
+    for (int i = 1; i <= 3; ++i) {
+      if (depth + i > s.length()) {
         break;
+      }
       String nextNum = s.substring(depth, depth + i);
-      if( checkAvailable(nextNum) ) {
+      if (isIpValid(nextNum)) {
         path.add(nextNum);
-        _restoreIpAddress(ans, path, s, depth + i);
-        path.remove(path.size()-1);
+        restoreIpAddressesHelper(s, depth + i, path, res);
+        path.remove(path.size() - 1);
       }
     }
   }
-  public boolean checkAvailable(String s) {
-    if( s.charAt(0) == '0' )
+  private boolean isIpValid(String s) {
+    if (s == null || s.length() == 0) {
+      return false;
+    }
+    if (s.charAt(0) == '0') {
       return s.equals("0");
-    int num = Integer.parseInt(s);
-    return num >= 0 && num <= 255;
+    }
+    int ip = Integer.parseInt(s);
+    if (ip <= 255 && ip >= 0) {
+      return true;
+    }
+    return false;
   }
 }
