@@ -14,13 +14,14 @@ public class Solution {
       return;
     }
     for (int i = depth; i < nums.length; ++i ) {
-      int tmp = nums[depth];
-      nums[depth] = nums[i];
-      nums[i] = tmp;
+      swap(nums, i, depth);
       permuteHelper(nums, depth + 1, res);
-      tmp = nums[depth];
-      nums[depth] = nums[i];
-      nums[i] = tmp;
+      swap(nums, i, depth);
     }
+  }
+  private void swap(int[] nums, int i, int j) {
+    int save = nums[i];
+    nums[i] = nums[j];
+    nums[j] = save;
   }
 }
