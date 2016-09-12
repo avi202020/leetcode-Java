@@ -1,63 +1,74 @@
-
-
-// TLE on the large test ... T_T
 public class Solution {
-    public ArrayList<ArrayList<String>> findLadders(String start, String end,
-			HashSet<String> dict) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
-		HashSet<String> visited = new HashSet<String>();
-		visited.add(start);
-		ArrayList<String> path = new ArrayList<String>();
-		path.add(start);
-		ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
-		dfs(dict, visited, path, ans, start, end);
-		int max = Integer.MAX_VALUE;
-		ArrayList<ArrayList<String>> ret = new ArrayList<ArrayList<String>>();
-		for (int i = 0; i < ans.size(); ++i) {
-			if (ans.get(i).size() < max) {
-				max = ans.get(i).size();
-				ret.clear();
-				ret.add(ans.get(i));
-			} else if (ans.get(i).size() == max) {
-				ret.add(ans.get(i));
-			}
-		}
-		return ret;
-	}
+  public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+    List<List<String>> ladders = new ArrayList<List<String>>();
+    Map<String, List<String>> map = new HashMap<String, List<String>>();
+    Map<String, Integer> distance = new HashMap<String, Integer>();
 
-	public void dfs(HashSet<String> dict, HashSet<String> visited,
-			ArrayList<String> path, ArrayList<ArrayList<String>> ans,
-			String cur, String end) {
-		if (cur.equals(end)) {
-			ArrayList<String> newpath = new ArrayList<String>(path);
-			ans.add(newpath);
-			return;
-		}
-		StringBuilder sb = null;
-		for (int i = 0; i < cur.length(); ++i) {
-			for (int j = 0; j < 26; ++j) {
-				char ch = (char) ('a' + j);
-				sb = new StringBuilder(cur);
-				sb.setCharAt(i, ch);
-				String candidate = sb.toString();
-				if (candidate.equals(end)) {
-					path.add(end);
-					ArrayList<String> newpath = new ArrayList<String>(path);
-					ans.add(newpath);
-					path.remove(end);
-					return;
-				}
-				if (dict.contains(candidate)) {
-					if (visited.contains(candidate))
-						continue;
-					path.add(candidate);
-					visited.add(candidate);
-					dfs(dict, visited, path, ans, candidate, end);
-					path.remove(path.size() - 1);
-					visited.remove(candidate);
-				}
-			}
-		}
-	}
+    dict.add(start);
+    dict.add(end);
+
+    bfs(map, distance, start, end, dict);
+    List<String> path = new ArrayList<String>();
+    dfs(ladders, path, end, start, distance, map);
+    return ladders;
+  }
+
+  void dfs(List<List<String>> ladders, List<String> path, String crt,
+           String start, Map<String, Integer> distance,
+           Map<String, List<String>> map) {
+    path.add(crt);
+    if (crt.equals(start)) {
+      Collections.reverse(path);
+      ladders.add(new ArrayList<String>(path));
+      Collections.reverse(path);
+    } else {
+      for (String next : map.get(crt)) {
+        if (distance.containsKey(next) && distance.get(crt) == distance.get(next) + 1) {
+          dfs(ladders, path, next, start, distance, map);
+        }
+      }
+    }
+    path.remove(path.size() - 1);
+  }
+
+  void bfs(Map<String, List<String>> map, Map<String, Integer> distance,
+           String start, String end, Set<String> dict) {
+    Queue<String> q = new LinkedList<String>();
+    q.offer(start);
+    distance.put(start, 0);
+    for (String s : dict) {
+      map.put(s, new ArrayList<String>());
+    }
+
+    while (!q.isEmpty()) {
+      String crt = q.poll();
+
+      List<String> nextList = expand(crt, dict);
+      for (String next : nextList) {
+        map.get(next).add(crt);
+        if (!distance.containsKey(next)) {
+          distance.put(next, distance.get(crt) + 1);
+          q.offer(next);
+        }
+      }
+    }
+  }
+
+  List<String> expand(String crt, Set<String> dict) {
+    List<String> expansion = new ArrayList<String>();
+
+    for (int i = 0; i < crt.length(); i++) {
+      for (char ch = 'a'; ch <= 'z'; ch++) {
+        if (ch != crt.charAt(i)) {
+          String expanded = crt.substring(0, i) + ch
+              + crt.substring(i + 1);
+          if (dict.contains(expanded)) {
+            expansion.add(expanded);
+          }
+        }
+      }
+    }
+
+    return expansion;
+  }
 }
