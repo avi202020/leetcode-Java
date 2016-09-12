@@ -21,8 +21,9 @@ public class Solution {
           digit.append(roman[index+1]);
           curdigit = curdigit - 5;
         }
-        for (int i = 1; i <= curdigit; ++i)
+        for (int i = 1; i <= curdigit; ++i) {
           digit.append(roman[index]);
+        }
       }
       res.insert(0, digit.toString());
       index = index + 2;
