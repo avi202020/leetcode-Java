@@ -44,9 +44,9 @@ public class Solution {
  * }
  */
 public class Solution {
-  TreeNode lastNode = null;
-  TreeNode firstNode = null;
-  TreeNode secondNode = null;
+  private TreeNode lastNode = null;
+  private TreeNode firstNode = null;
+  private TreeNode secondNode = null;
   public void recoverTree(TreeNode root) {
     firstNode = null;
     secondNode = null;
