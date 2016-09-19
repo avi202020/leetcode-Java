@@ -31,10 +31,8 @@ public class Solution {
       if (!map.containsKey(next)) {
         UndirectedGraphNode newNode = new UndirectedGraphNode(next.label);
         map.put(next, newNode);
-        map.get(node).neighbors.add(newNode);
-      } else {
-        map.get(node).neighbors.add(map.get(next));
       }
+      map.get(node).neighbors.add(map.get(next));
       cloneGraphHelper(next, map, visited);
     }
   }
