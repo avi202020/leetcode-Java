@@ -1,6 +1,6 @@
 public class NumArray {
 
-  int[] sums;
+  private int[] sums;
   public NumArray(int[] nums) {
     sums = new int[nums.length];
     int sum = 0;
