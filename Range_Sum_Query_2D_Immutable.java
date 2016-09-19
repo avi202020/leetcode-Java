@@ -1,7 +1,7 @@
 public class NumMatrix {
 
-  int[][] sumMatrix;
-  boolean empty;
+  private int[][] sumMatrix;
+  private boolean empty;
   public NumMatrix(int[][] matrix) {
     int m = matrix.length;
     if (m == 0) {
