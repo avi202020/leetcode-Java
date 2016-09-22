@@ -7,6 +7,7 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+// solution 1.
 public class Solution {
   public List<Integer> closestKValues(TreeNode root, double target, int k) {
     LinkedList<Integer> klist = new LinkedList<Integer>();
@@ -37,5 +38,32 @@ public class Solution {
       }
     }
     return klist;
+  }
+}
+
+// solution 2.
+public class Solution {
+  public List<Integer> closestKValues(TreeNode root, double target, int k) {
+    LinkedList<Integer> res = new LinkedList<>();
+    inOrder(root, target, k, res);
+    return res;
+  }
+
+  private void inOrder(TreeNode root, double target, int k, LinkedList<Integer> res) {
+    if (root == null) {
+      return;
+    }
+    inOrder(root.left, target, k, res);
+    if (res.size() == k) {
+      if (Math.abs(res.getFirst() - target) >= Math.abs(root.val - target)) {
+        res.removeFirst();
+        res.addLast(root.val);
+      } else {
+        return;
+      }
+    } else {
+      res.addLast(root.val);
+    }
+    inOrder(root.right, target, k, res);
   }
 }
