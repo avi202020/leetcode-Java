@@ -30,23 +30,23 @@ public class Solution {
 // solution 2. dequeue O(n) time
 public class Solution {
   public int[] maxSlidingWindow(int[] nums, int k) {
-    if (nums == null || nums.length == 0) {
+    if (k == 0) {
       return new int[0];
     }
-    int[] result = new int[nums.length - k + 1];
-    LinkedList<Integer> deque = new LinkedList<Integer>();
+    LinkedList<Integer> q = new LinkedList<Integer>();
+    int[] res = new int[nums.length - k + 1];
     for (int i = 0; i < nums.length; i++) {
-      if (!deque.isEmpty() && deque.peekFirst() == i - k) {
-        deque.poll();
+      while (!q.isEmpty() && nums[i] >= nums[q.getLast()]) {
+        q.removeLast();
       }
-      while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
-        deque.removeLast();
+      q.addLast(i);
+      if (i - q.getFirst() + 1 > k) {
+        q.removeFirst();
       }
-      deque.offer(i);
       if (i + 1 >= k) {
-        result[i + 1 - k] = nums[deque.peek()];
+        res[i - k + 1] = nums[q.getFirst()];
       }
     }
-    return result;
+    return res;
   }
 }
