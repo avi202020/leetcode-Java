@@ -8,8 +8,9 @@ public class Solution {
 
   private void getFactors(List<List<Integer>> res, List<Integer> list, int n, int factor) {
     if (n <= 1) {
-      if (list.size() > 1)
+      if (list.size() > 1) {
         res.add(new ArrayList<Integer>(list));
+      }
       return;
     }
 
