@@ -14,7 +14,7 @@ public class Solution {
     }
     for (int i = 0; i < matrix.length; ++i) {
       int area = largestRectangleArea(m[i]);
-      if (area > max) max = area;
+      ans = Math.max(ans, tmp);
     }
     return max;
   }
